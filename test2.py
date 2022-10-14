@@ -20,6 +20,10 @@ def calculate_distance(i1, i2):
     return summa
 
 
+def hund_calc_medelv():
+    medel = sum(hund1)
+
+
 def calculate_distance2(i1, i2):
     summa2 = numpy.sum((i1 - i2) ** 2)
     katt_list.append(summa2)
@@ -43,7 +47,6 @@ dog8 = Image.open("images/dog.8.jpg")
 dog9 = Image.open("images/dog.9.jpg")
 dog10 = Image.open("images/dog.10.jpg")
 
-
 cat1 = Image.open('images/cat.1.jpg')
 cat2 = Image.open("images/cat.2.jpg")
 cat3 = Image.open("images/cat.3.jpg")
@@ -54,8 +57,6 @@ cat7 = Image.open("images/cat.7.jpg")
 cat8 = Image.open("images/cat.8.jpg")
 cat9 = Image.open("images/cat.9.jpg")
 cat10 = Image.open("images/cat.10.jpg")
-
-
 
 # Gör bilden svart-vit
 dog1 = dog1.convert("L")
@@ -120,6 +121,7 @@ hund8 = asarray(dog8)
 hund9 = asarray(dog9)
 hund10 = asarray(dog10)
 
+
 katt1 = asarray(cat1)
 katt2 = asarray(cat2)
 katt3 = asarray(cat3)
@@ -151,6 +153,6 @@ katt_list.sort()
 hund_list.sort()
 print(f"Hundar: {hund_list}")
 print(f"Katter: {katt_list}")
-print(f"Medelvärde hund: {sum(hund_list)/10} och katt: {sum(katt_list)/10}")
+print(f"Medelvärde hund: {sum(hund_list) / 10} och katt: {sum(katt_list) / 10}")
 # Skriv ut pixel-värde i pixel 0,0
 # print(hund1[0, 0])
