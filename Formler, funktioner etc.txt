@@ -1,0 +1,13 @@
+
+## Euklides distans formel
+math.sqrt((float(i1) - float(i2)) ** 2)
+
+
+## Räkna antal items i en mapp
+item_count = 0
+# Iterate directory
+for path in os.listdir(KATT_DIR):
+    # check if current path is a file
+    if os.path.isfile(os.path.join(KATT_DIR, path)):
+        item_count += 1
+print('File count:', item_count)
