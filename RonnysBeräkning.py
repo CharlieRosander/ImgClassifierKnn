@@ -84,8 +84,8 @@ bild = ''
 pixelavstånd = []
 pixelavstånd1 = []
 
-directory = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/hund"
-directory1 = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/katt"
+directory = "C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/katt"
+directory1 = "C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/hund"
 
 
 def räknare():
@@ -114,7 +114,7 @@ def räknare():
 
         del pixelavstånd[index1]
 
-        if varv1 == 3:
+        if varv1 == 7:
             break
         else:
             continue
@@ -147,16 +147,18 @@ def matrix(x, y):
     print(f"Distans-värde mellan pixlarna: {distance_list}")
 
 
-test1 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/test/11.jpg")
+test1 = Image.open("C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/test/39.jpg")
 test1 = test1.convert("L")
-test1 = test1.resize((2, 2))
+test1 = test1.resize((50, 50))
 test1_data = asarray(test1)
+test1_sum = test1_data.sum()
 
 test_value_list = []
 for row2 in test1_data:
     for value2 in row2:
         test_value_list.append(value2)
 
+pixel_värde_hund = []
 varv = 0
 for filename in os.listdir(directory):
     varv += 1
@@ -165,10 +167,14 @@ for filename in os.listdir(directory):
     if os.path.isfile(f):
         img = Image.open(f)
         img = img.convert("L")
-        img = img.resize((2, 2))
+        img = img.resize((50, 50))
         data1 = asarray(img)
-        matrix(test_value_list, data1)
+        data1_sum = data1.sum()
+        print(data1_sum)
+        # pixel_värde_hund.append(data1.sum())
+        matrix(test1_sum, data1_sum)
 
+pixel_värde_katt = []
 varv = 0
 for filename in os.listdir(directory1):
     bild = filename
@@ -178,9 +184,16 @@ for filename in os.listdir(directory1):
     if os.path.isfile(f):
         img = Image.open(f)
         img = img.convert("L")
-        img = img.resize((2, 2))
+        img = img.resize((50, 50))
         data1 = asarray(img)
-        matrix(test_value_list, data1)
 
+        # pixel_värde_katt.append(data1.sum())
+        matrix(test1_sum, data1_sum)
+
+# print(test1_sum)
 räknare()
-print(pixelavstånd)
+# print(pixelavstånd)
+# print(data1_sum)
+# print(pixel_värde_katt)
+# print(pixel_värde_hund)
+# print(test1_sum)
