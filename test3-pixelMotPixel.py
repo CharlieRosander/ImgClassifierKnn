@@ -1,9 +1,12 @@
-import numpy
 from PIL import Image
 from numpy import asarray
 import math
 import os
-import matplotlib.pyplot as plt
+import numpy as np
+
+KATT_DIR = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/katt"
+HUND_DIR = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/hund"
+TEST_DIR = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/test"
 
 
 def uträkning(i1, i2):
@@ -35,27 +38,27 @@ def uträkning(i1, i2):
 #         img = img.resize((2, 2))
 #         numpydata = asarray(img)
 
-dog1 = Image.open('images/hund/dog.3.jpg')
+dog1 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/hund/dog.0.jpg")
 dog1 = dog1.convert("L")
 dog1 = dog1.resize((4, 4))
 dog_data1 = asarray(dog1)
 
-dog2 = Image.open('images/hund/dog.21.jpg')
+dog2 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/hund/dog.1.jpg")
 dog2 = dog2.convert("L")
 dog2 = dog2.resize((4, 4))
 dog_data2 = asarray(dog2)
 
-cat1 = Image.open('images/katt/cat.14.jpg')
+cat1 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/katt/cat.0.jpg")
 cat1 = cat1.convert("L")
 cat1 = cat1.resize((4, 4))
 cat_data1 = asarray(cat1)
 
-cat2 = Image.open('images/katt/cat.38.jpg')
+cat2 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/katt/cat.1.jpg")
 cat2 = cat2.convert("L")
 cat2 = cat2.resize((4, 4))
 cat_data2 = asarray(cat2)
 
-test1 = Image.open("images/test/2.jpg")
+test1 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/test/2.jpg")
 test1 = test1.convert("L")
 test1 = test1.resize((4, 4))
 test1_data = asarray(test1)
@@ -65,7 +68,6 @@ for row in dog_data1:
     for value in row:
         dog_value_list.append(value)
 print(f"Hund värde: {dog_value_list}")
-
 
 test_value_list = []
 for row2 in test1_data:
