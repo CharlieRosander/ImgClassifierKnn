@@ -1,0 +1,24 @@
+-Anteckningar, frågeställningar-
+Vad avgör i koden vad som är en hund eller katt?:
+I funktionen räknare kan man ändra i if-satserna på jämförelserna (<= och >=) vilket avgör om den gissar katt eller hund.
+*Avser även min röst-räknare som är byggd efter denna funktion då den bara räknar antalet "hund" eller "katt"
+
+Hur fungerar våran knn-implementation?:
+Är våran knn funktion säker? Hur väljer den dom k=x närmaste värdena?
+
+*os.listdir sorterar inte i rätt ordning, går inte att lösa utan andra paket eller liknande
+
+-TO-DO-
+Generellt:
+Snygga till hela koden, ändra till tydligare namn på flera variabler, funktioner etc.
+Rensa/Städa koden, mycket ligger tomt eller överflödigt.
+
+
+Specifikt:
+Vad är "distance_list" och "variabel"? Vad gör dom?:
+-Ta reda på vad distance list och variabel är.
+
+Vad är "lägsta" och "index1"? Hur fungerar funktionen räknare?:
+-Ta reda på hela funktionen, kan man förbättra/optimera den? Skriva om den?
+
+-Bygg en funktion för kontinuerlig testning. Gör separata mappar och kanske funktioner för att testa enbart hundar/katter

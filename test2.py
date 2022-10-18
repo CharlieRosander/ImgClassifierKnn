@@ -1,158 +1,115 @@
-import math
-import numpy
 from PIL import Image
 from numpy import asarray
+import numpy
+import math
+import os
+import numpy as np
 
-# hund_bilder = ['images/dog.1.jpg', 'images/dog.2.jpg', 'images/dog.3.jpg', 'images/dog.4.jpg', 'images/dog.5.jpg',
-#                'images'
-#                '/dog.6.jpg', 'images/dog.7.jpg', 'images/dog.8.jpg', 'images/dog.9.jpg', 'images/dog.10.jpg']
-#
-# katt_bilder = ['images/cat.1.jpg', 'images/cat.2.jpg', 'images/cat.3.jpg', 'images/cat.4.jpg', 'images/cat.5.jpg',
-#                'images'
-#                '/cat.6.jpg', 'images/cat.7.jpg', 'images/cat.8.jpg', 'images/cat.9.jpg', 'images/cat.10.jpg']
-katt_list = []
-hund_list = []
+bild = ''
+pixelavstånd = []
 
+directory = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/hund"
+directory1 = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/katt"
 
-def calculate_distance(i1, i2):
-    summa = numpy.sum((i1 - i2) ** 2)
-    hund_list.append(summa)
-    return summa
+knn_result = []
 
 
-def hund_calc_medelv():
-    medel = sum(hund1)
+def räknare():
+    varv1 = 0
+    while True:
+        while True:
+            varv1 += 1
+
+            lägsta = pixelavstånd[0]
+            index1 = 0
+
+            for i, x in enumerate(pixelavstånd):
+
+                if x < lägsta:
+                    lägsta = x
+                    index1 = i
+            if index1 <= 300:
+                bild = 'Hund'
+                break
+            if index1 >= 300:
+                bild = 'Katt'
+                break
+
+        knn_result.append(bild)
+        print(f'Det minsta avståndet är {lägsta} på bild nr {index1}, som är en {bild}')
+
+        del pixelavstånd[index1]
+
+        if varv1 == 11:
+            break
+        else:
+            continue
 
 
-def calculate_distance2(i1, i2):
-    summa2 = numpy.sum((i1 - i2) ** 2)
-    katt_list.append(summa2)
-    return summa2
+def uträkning(i1, i2):
+    return math.sqrt((float(i1) - float(i2)) ** 2)
 
 
-def calculate_distance3(i1, i2):
-    summa = numpy.sum((i1 - i2) ** 2)
-    return summa
+def matrix(x1, x2):
+    value_list = []
+    for row in data1:
+        for value in row:
+            value_list.append(value)
+
+    distance_list = []
+    index = 0
+    while index < len(value_list):
+        x1 = value_list[index]
+        x2 = test_value_list[index]
+        index += 1
+        distance_list.append(uträkning(x1, x2))
+
+        if index == len(value_list):
+            variabel = sum(distance_list)
+            pixelavstånd.append(variabel)
+            break
 
 
-# Öppna bilden i en variabel
-dog1 = Image.open('images/dog.1.jpg')
-dog2 = Image.open("images/dog.2.jpg")
-dog3 = Image.open("images/dog.3.jpg")
-dog4 = Image.open("images/dog.4.jpg")
-dog5 = Image.open("images/dog.5.jpg")
-dog6 = Image.open("images/dog.6.jpg")
-dog7 = Image.open("images/dog.7.jpg")
-dog8 = Image.open("images/dog.8.jpg")
-dog9 = Image.open("images/dog.9.jpg")
-dog10 = Image.open("images/dog.10.jpg")
+test1 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/test/40.jpg")
+test1 = test1.convert("L")
+test1 = test1.resize((50, 50))
+test1_data = asarray(test1)
+test1_sum = test1_data.sum()
 
-cat1 = Image.open('images/cat.1.jpg')
-cat2 = Image.open("images/cat.2.jpg")
-cat3 = Image.open("images/cat.3.jpg")
-cat4 = Image.open("images/cat.4.jpg")
-cat5 = Image.open("images/cat.5.jpg")
-cat6 = Image.open("images/cat.6.jpg")
-cat7 = Image.open("images/cat.7.jpg")
-cat8 = Image.open("images/cat.8.jpg")
-cat9 = Image.open("images/cat.9.jpg")
-cat10 = Image.open("images/cat.10.jpg")
+test_value_list = []
+for row2 in test1_data:
+    for value2 in row2:
+        test_value_list.append(value2)
 
-# Gör bilden svart-vit
-dog1 = dog1.convert("L")
-dog2 = dog2.convert("L")
-dog3 = dog3.convert("L")
-dog4 = dog4.convert("L")
-dog5 = dog5.convert("L")
-dog6 = dog6.convert("L")
-dog7 = dog7.convert("L")
-dog8 = dog8.convert("L")
-dog9 = dog9.convert("L")
-dog10 = dog10.convert("L")
+varv = 0
+for filename in os.listdir(directory):
+    varv += 1
+    f = os.path.join(directory, filename)
+    if os.path.isfile(f):
+        img = Image.open(f)
+        img = img.convert("L")
+        img = img.resize((50, 50))
+        data1 = asarray(img)
+        data1_sum = data1.sum()
+        matrix(test1_sum, data1_sum)
 
-# Ändra bildens storlek till 30x30
-dog1 = dog1.resize((30, 30))
-dog2 = dog2.resize((30, 30))
-dog3 = dog3.resize((30, 30))
-dog4 = dog4.resize((30, 30))
-dog5 = dog5.resize((30, 30))
-dog6 = dog6.resize((30, 30))
-dog7 = dog7.resize((30, 30))
-dog8 = dog8.resize((30, 30))
-dog9 = dog9.resize((30, 30))
-dog10 = dog10.resize((30, 30))
+varv = 0
+for filename in os.listdir(directory1):
+    bild = filename
+    varv += 1
+    f = os.path.join(directory1, filename)
+    if os.path.isfile(f):
+        img = Image.open(f)
+        img = img.convert("L")
+        img = img.resize((50, 50))
+        data1 = asarray(img)
+        matrix(test1_sum, data1_sum)
 
-cat1 = cat1.convert("L")
-cat2 = cat2.convert("L")
-cat3 = cat3.convert("L")
-cat4 = cat4.convert("L")
-cat5 = cat5.convert("L")
-cat6 = cat6.convert("L")
-cat7 = cat7.convert("L")
-cat8 = cat8.convert("L")
-cat9 = cat9.convert("L")
-cat10 = cat10.convert("L")
+räknare()
+antal_hundar = knn_result.count("Hund")
+antal_katter = knn_result.count("Katt")
+if antal_hundar < antal_katter:
+    print("Bilden är en katt")
+else:
+    print("Bilden är en hund")
 
-# Ändra bildens storlek till 30x30
-cat1 = cat1.resize((30, 30))
-cat2 = cat2.resize((30, 30))
-cat3 = cat3.resize((30, 30))
-cat4 = cat4.resize((30, 30))
-cat5 = cat5.resize((30, 30))
-cat6 = cat6.resize((30, 30))
-cat7 = cat7.resize((30, 30))
-cat8 = cat8.resize((30, 30))
-cat9 = cat9.resize((30, 30))
-cat10 = cat10.resize((30, 30))
-
-# Visa bilden
-# img.show()
-
-
-# Gör om bilden till en NuMPy matris
-hund1 = asarray(dog1)
-hund2 = asarray(dog2)
-hund3 = asarray(dog3)
-hund4 = asarray(dog4)
-hund5 = asarray(dog5)
-hund6 = asarray(dog6)
-hund7 = asarray(dog7)
-hund8 = asarray(dog8)
-hund9 = asarray(dog9)
-hund10 = asarray(dog10)
-
-
-katt1 = asarray(cat1)
-katt2 = asarray(cat2)
-katt3 = asarray(cat3)
-katt4 = asarray(cat4)
-katt5 = asarray(cat5)
-katt6 = asarray(cat6)
-katt7 = asarray(cat7)
-katt8 = asarray(cat8)
-katt9 = asarray(cat9)
-katt10 = asarray(cat10)
-
-print(f"Hund: {calculate_distance(hund6, hund2)}")
-print(f"Hund: {calculate_distance(hund3, hund5)}")
-print(f"Hund: {calculate_distance(hund1, hund9)}")
-print(f"Hund: {calculate_distance(hund7, hund4)}")
-print(f"Hund: {calculate_distance(hund10, hund8)}")
-
-print("")
-print(f"Katt: {calculate_distance2(katt3, katt5)}")
-print(f"Katt: {calculate_distance2(katt4, katt1)}")
-print(f"Katt: {calculate_distance2(katt2, katt8)}")
-print(f"Katt: {calculate_distance2(katt7, katt10)}")
-print(f"Katt: {calculate_distance2(katt9, katt6)}")
-
-print("")
-print(f"Katt med hund: {calculate_distance3(katt2, hund10)}")
-
-katt_list.sort()
-hund_list.sort()
-print(f"Hundar: {hund_list}")
-print(f"Katter: {katt_list}")
-print(f"Medelvärde hund: {sum(hund_list) / 10} och katt: {sum(katt_list) / 10}")
-# Skriv ut pixel-värde i pixel 0,0
-# print(hund1[0, 0])
