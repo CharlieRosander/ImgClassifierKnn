@@ -1,12 +1,12 @@
 from PIL import Image
 from numpy import asarray
-import numpy
+import random
 import math
 import os
-import numpy as np
 
-HUND_DIR = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/hund"
-KATT_DIR = "C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/katt"
+
+HUND_DIR = "C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/hund"
+KATT_DIR = "C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/katt"
 
 knn_result = []
 min_distance_and_label = []
@@ -48,7 +48,7 @@ def vote_count():
             print("Bilden är en hund")
             break
 
-
+# Funktion med euklides distans-formel för att räkna ut distansen mellan pixlarna
 def euklides_formel(i1, i2):
     return math.sqrt((float(i1) - float(i2)) ** 2)
 
@@ -82,7 +82,8 @@ def katt_mot_test(train, test):
 
 # Öppnar test bilden,
 test_pixel_sum = []
-test_img1 = Image.open("C:/Users/Kaliber/Desktop/AI-Developer-Jensen/PythonProjects/ImgClassifierKnn/images/test/6.jpg")
+# test_img1 = Image.open("C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/test/21.jpg")
+test_img1 = Image.open("images/test/" + random.choice(os.listdir("images/test")))
 test_img1 = test_img1.convert("L")
 test_img1 = test_img1.resize((50, 50))
 test1_data = asarray(test_img1)

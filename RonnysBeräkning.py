@@ -27,7 +27,7 @@ def räknare():
                 if x < lägsta:
                     lägsta = x
                     index1 = i
-            if index1 <= 300:
+            if index1 <= 100:
                 bild = 'Hund'
                 break
             if index1 >= 300:
