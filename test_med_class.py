@@ -1,123 +1,144 @@
 from PIL import Image
 from numpy import asarray
-import numpy
 import math
 import os
-import numpy as np
 
 
-HUND_DIR = "C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/hund"
-KATT_DIR = "C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/katt"
+# En klass för att öppna, konvertera och lagra alla bilder
+class SkapaDjur:
+    hund_pixel_sum = []
+    hund_dir = "images/hund"
+    katt_pixel_sum = []
+    katt_dir = "images/katt"
+    test_pixel_sum = []
+    test_dir = "images/test"
 
-knn_result = []
-min_distance_and_label = []
-distance_list_hund = []
-distance_list_katt = []
-label_and_l2_value = []
-hund_pixel_sum = []
-katt_pixel_sum = []
-test_pixel_sum = []
+    # HUNDAR
+    # Öppnar och konverterar hundbilderna, samt summerar varje bilds totala pixelvärde
+    # och lägger det i en ny lista tillsammans med en etikett
+    # för att senare kunna komma åt etiketten när röstningen ska genomföras
+    @classmethod
+    def läs_in_hund(cls):
+        hund_counter = 0
+        for filename in os.listdir(SkapaDjur.hund_dir):
+            f = os.path.join(SkapaDjur.hund_dir, filename)
+            if os.path.isfile(f):
+                img = Image.open(f)
+                img = img.convert("L")
+                img = img.resize((70, 70))
+                hund_data = asarray(img)
+                hund_data_sum = hund_data.sum()
+                SkapaDjur.hund_pixel_sum.append([f"Hund {hund_counter}", hund_data_sum])
+                hund_counter += 1
 
-
-def mata_in_bilder():
-    # Öppnar test bilden,
-    test_img1 = Image.open("C:/Users/charl/PycharmProjects/GruppArbete-AIprojekt/images/test/4.jpg")
-    test_img1 = test_img1.convert("L")
-    test_img1 = test_img1.resize((50, 50))
-    test1_data = asarray(test_img1)
-    test1_data_sum = test1_data.sum()
-    test_pixel_sum.append(test1_data_sum)
-
-    #HUNDAR
-    # Öppnar och konverterar hundbilderna
-    for filename in os.listdir(HUND_DIR):
-        f = os.path.join(HUND_DIR, filename)
-        if os.path.isfile(f):
-            img = Image.open(f)
-            img = img.convert("L")
-            img = img.resize((50, 50))
-            hund_data = asarray(img)
-            hund_data_sum = hund_data.sum()
-            hund_pixel_sum.append(hund_data_sum)
-
-    hund_mot_test(hund_pixel_sum, test_pixel_sum)
+        return SkapaDjur.hund_pixel_sum
 
     # KATTER
-    # Öppnar och konverterar kattbilderna
-    for filename in os.listdir(KATT_DIR):
-        f = os.path.join(KATT_DIR, filename)
-        if os.path.isfile(f):
-            img = Image.open(f)
-            img = img.convert("L")
-            img = img.resize((50, 50))
-            katt_data = asarray(img)
-            katt_data_sum = katt_data.sum()
-            katt_pixel_sum.append(katt_data_sum)
+    # Öppnar och konverterar kattbilderna, samt summerar varje bilds totala pixelvärde
+    # och lägger det i en ny lista tillsammans med en etikett
+    # för att senare kunna komma åt etiketten när röstningen ska genomföras
+    @classmethod
+    def läs_in_katt(cls):
+        katt_counter = 0
+        for filename in os.listdir(SkapaDjur.katt_dir):
+            f = os.path.join(SkapaDjur.katt_dir, filename)
+            if os.path.isfile(f):
+                img = Image.open(f)
+                img = img.convert("L")
+                img = img.resize((70, 70))
+                katt_data = asarray(img)
+                katt_data_sum = katt_data.sum()
+                SkapaDjur.katt_pixel_sum.append([f"Katt {katt_counter}", katt_data_sum])
+                katt_counter += 1
 
-    katt_mot_test(katt_pixel_sum, test_pixel_sum)
+        return SkapaDjur.katt_pixel_sum
+
+    # TEST
+    # Öppnar och konverterar testbilden, samt summerar bildens totala pixelvärde
+    # och lägger det i en ny lista.
+    @classmethod
+    def läs_in_test(cls):
+        test_counter = 0
+        for filename in os.listdir(SkapaDjur.test_dir):
+            f = os.path.join(SkapaDjur.test_dir, filename)
+            if os.path.isfile(f):
+                test_img = Image.open(f)
+                test_img = test_img.convert("L")
+                test_img = test_img.resize((70, 70))
+                test_data = asarray(test_img)
+                test_data_sum = test_data.sum()
+                SkapaDjur.test_pixel_sum.append([f"Test {test_counter}", test_data_sum])
+
+                test_counter += 1
+
+        return SkapaDjur.test_pixel_sum
 
 
-# Funktion med euklides
-def euklides_formel(i1, i2):
-    return math.sqrt((float(i1) - float(i2)) ** 2)
-
-
-def hund_mot_test(train, test):
+# Funktion för att gå skicka varje bilds pixelvärde från listan "hund_pixel_sum" till euklides formel
+# och sedan lägga till resultatet i "knn_result".
+# "hund_pixel_sum" ser ut såhär: [['Hund 0', 279889]...] så här används indexering för att komma åt namn/värde
+def hund_mot_test(x1, x2):
     index = 0
-    while index < len(hund_pixel_sum):
-        x1 = hund_pixel_sum[index]
-        x2 = test_pixel_sum[0]
+    while index < len(SkapaDjur.test_pixel_sum):
+        x1 = SkapaDjur.hund_pixel_sum[index][1]
+        x2 = SkapaDjur.test_pixel_sum[index][1]
+        Knn.knn_result.append([f"Hund {index}", euklides_formel(x1, x2)])
         index += 1
-        label_and_l2_value.append([f"Hund {index}", euklides_formel(x1, x2)])
-        distance_list_hund.append(euklides_formel(x1, x2))
 
 
-# Går igenom katt värdena och skickar det till uträknaren och lägger sedan till det värdet i distance_list_katt
-def katt_mot_test(train, test):
+# Funktion för att gå skicka varje bilds pixelvärde från listan "katt_pixel_sum" till euklides formel
+# och sedan lägga till resultatet i "knn_result".
+# "katt_pixel_sum" ser ut såhär: [['Katt 0', 279889]...] så här används indexering för att komma åt namn/värde
+def katt_mot_test(x1, x2):
     index = 0
-    while index < len(katt_pixel_sum):
-        x1 = katt_pixel_sum[index]
-        x2 = test_pixel_sum[0]
+    while index < len(SkapaDjur.test_pixel_sum):
+        x1 = SkapaDjur.katt_pixel_sum[index][1]
+        x2 = SkapaDjur.test_pixel_sum[index][1]
+        Knn.knn_result.append([f"Katt {index}", euklides_formel(x1, x2)])
+
         index += 1
-        label_and_l2_value.append([f"Katt {index}", euklides_formel(x1, x2)])
-        distance_list_katt.append(euklides_formel(x1, x2))
 
 
-# Funktion för att sortera distanserna i storleksordning, sen ta dom k minsta och lägga till dom i en ny lista
-# med namnet på bilden samt värdet
-def knn():
-    knn_list = distance_list_hund + distance_list_katt
-    knn_list.sort()
-    k_värde = 11
+# En klass för att hantera Knn
+# här är knn_result listan som distanserna samt etiketterna finns från dom andra funktionerna
+class Knn:
+    knn_result = []
 
-    for l2_value in label_and_l2_value:
-        for value in knn_list[0:k_värde]:
-            if value == l2_value[1]:
-                min_distance_and_label.append(l2_value)
-                break
+    # Den här funktionen hanterar räkningen och röstningen för att avgöra om det är en hund eller katt.
+    # Här sätts också k-värdet som avgör hur många röster som ska räknas.
+    # Vi använder en speciell funktion "lambda"
+    # som används för att sortera knn_result i storleksordning baserat på värdet i index[1]
+    @classmethod
+    def vote(cls):
+        hund_count = 0
+        katt_count = 0
+        k_värde = 5
+        Knn.knn_result.sort(key=lambda x: x[1])
 
-
-# Funktion för att räkna rösterna och klasifficera bilden
-def vote_count():
-    hund_count = 0
-    katt_count = 0
-    while True:
-        for label_and_value in min_distance_and_label:
-            for label in label_and_value:
+        print("Dom kortaste distanserna är:")
+        for value in Knn.knn_result[0:k_värde]:
+            print(value)
+            for label in value:
                 if "Hund" in label:
                     hund_count += 1
                 if "Katt" in label:
                     katt_count += 1
                 break
-
-        if hund_count < katt_count:
-            print("Bilden är en katt")
-            break
-        else:
+        if hund_count > katt_count:
             print("Bilden är en hund")
-            break
+        else:
+            print("Bilden är en katt")
 
 
-mata_in_bilder()
-knn()
-vote_count()
+# Euklides distans formel, för att räkna ut distansen mellan summeringen av alla pixlar i varje bild
+def euklides_formel(i1, i2):
+    return math.sqrt((float(i1) - float(i2)) ** 2)
+
+
+# Här kallar vi på alla klasser/funktioner
+SkapaDjur.läs_in_hund()
+SkapaDjur.läs_in_katt()
+SkapaDjur.läs_in_test()
+hund_mot_test(SkapaDjur.hund_pixel_sum, SkapaDjur.test_pixel_sum)
+katt_mot_test(SkapaDjur.katt_pixel_sum, SkapaDjur.test_pixel_sum)
+Knn.vote()

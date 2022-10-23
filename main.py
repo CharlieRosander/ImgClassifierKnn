@@ -11,7 +11,6 @@ class SkapaDjur:
     katt_pixel_sum = []
     katt_dir = "images/katt"
     test_pixel_sum = []
-    test_dir = "images/test/4.jpg"
 
     # HUNDAR
     # Öppnar och konverterar hundbilderna, samt summerar varje bilds totala pixelvärde
@@ -25,7 +24,7 @@ class SkapaDjur:
             if os.path.isfile(f):
                 img = Image.open(f)
                 img = img.convert("L")
-                img = img.resize((50, 50))
+                img = img.resize((70, 70))
                 hund_data = asarray(img)
                 hund_data_sum = hund_data.sum()
                 SkapaDjur.hund_pixel_sum.append([f"Hund {hund_counter}", hund_data_sum])
@@ -45,7 +44,7 @@ class SkapaDjur:
             if os.path.isfile(f):
                 img = Image.open(f)
                 img = img.convert("L")
-                img = img.resize((50, 50))
+                img = img.resize((70, 70))
                 katt_data = asarray(img)
                 katt_data_sum = katt_data.sum()
                 SkapaDjur.katt_pixel_sum.append([f"Katt {katt_counter}", katt_data_sum])
@@ -58,10 +57,9 @@ class SkapaDjur:
     # och lägger det i en ny lista.
     @classmethod
     def läs_in_test(cls):
-        # Öppnar test bilden,
-        test_img1 = Image.open("images/test/2.jpg")
+        test_img1 = Image.open("images/test/17.jpg")
         test_img1 = test_img1.convert("L")
-        test_img1 = test_img1.resize((50, 50))
+        test_img1 = test_img1.resize((70, 70))
         test1_data = asarray(test_img1)
         test1_data_sum = test1_data.sum()
         SkapaDjur.test_pixel_sum.append(test1_data_sum)
@@ -82,7 +80,7 @@ class Knn:
     def vote(cls):
         hund_count = 0
         katt_count = 0
-        k_värde = 7
+        k_värde = 5
         Knn.knn_result.sort(key=lambda x: x[1])
 
         print("Dom kortaste distanserna är:")
